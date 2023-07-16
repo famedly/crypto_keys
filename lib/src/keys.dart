@@ -103,6 +103,19 @@ class KeyPair {
             curve: curve));
   }
 
+  pc.ECDomainParameters? curveParameters() {
+    final privKey = privateKey;
+    final pubKey = publicKey;
+    if (privKey is EcKey) {
+      return _AsymmetricOperator.createCurveParameters(
+          (privKey as EcKey).curve);
+    } else if (pubKey is EcKey) {
+      return _AsymmetricOperator.createCurveParameters((pubKey as EcKey).curve);
+    } else {
+      return null;
+    }
+  }
+
   /// Create a key pair from a JsonWebKey
   factory KeyPair.fromJwk(Map<String, dynamic> jwk) {
     switch (jwk['kty']) {
