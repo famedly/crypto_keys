@@ -12,6 +12,8 @@ abstract class _AsymmetricOperator<T extends Key> implements Operator<T> {
         return pc.ECCurve_secp384r1();
       case 'P-521':
         return pc.ECCurve_secp521r1();
+      case 'BP-256':
+        return pc.ECCurve_brainpoolp256r1();
     }
     throw ArgumentError('Unknwon curve type $name');
   }
@@ -78,6 +80,7 @@ class _AsymmetricSigner extends Signer<PrivateKey>
       var length = {
         curves.p256: 32,
         curves.p256k: 32,
+        curves.bp256r1: 32,
         curves.p384: 48,
         curves.p521: 66
       }[(key as EcKey).curve]!;
